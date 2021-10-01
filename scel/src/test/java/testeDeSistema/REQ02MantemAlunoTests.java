@@ -32,6 +32,231 @@ public class REQ02MantemAlunoTests {
 	}
 
 	@Test
+	public void cadastrarlivro() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("1234");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+		driver.findElement(By.id("titulo")).sendKeys("Guia de Testes");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+
+		driver.findElement(By.cssSelector("td:nth-child(2)")).click();
+
+		assertTrue(driver.getPageSource().contains("1234"));
+		assertTrue(driver.getPageSource().contains("Douglas Adams"));
+
+		driver.findElement(By.linkText("Excluir")).click();
+	}
+
+	@Test
+	public void cadastrarlivroComAutorNuloOuVazio() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("1234");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("");
+		driver.findElement(By.id("titulo")).sendKeys("Guia de Testes");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+	}
+
+	@Test
+	public void cadastrarlivroComAutorForaDoLimiteDeCaracters() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("1234");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys(
+				"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+				+ "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+				+ "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		driver.findElement(By.id("titulo")).sendKeys("Guia de Testes");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+	}
+
+	@Test
+	public void cadastrarlivroComTituloNuloOuVazio() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("1234");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+		driver.findElement(By.id("titulo")).sendKeys("");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+
+	}
+	
+	@Test
+	public void cadastrarlivroComTituloForaDoLimiteDeCaracteres() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+		
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("1234");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+		driver.findElement(By.id("titulo")).sendKeys("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\n" + 
+				"				+ \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"\r\n" + 
+				"				+ \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		
+	}
+	
+	
+	@Test
+	public void cadastrarlivroComISBNNuloOuVazio() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+		
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+		driver.findElement(By.id("titulo")).sendKeys("Guia de Bolso");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+
+	}
+	
+	
+	@Test
+	public void cadastrarlivroComISBNAlfanumerico() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+		
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+		driver.findElement(By.id("titulo")).sendKeys("Guia de Bolso");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+
+	}
+	
+	
+	@Test
+	public void cadastrarlivroComISBNForaDoLimiteDeCaracteres() {
+		driver.get("https://ts-scel-web.herokuapp.com/login");
+		driver.manage().window().setSize(new Dimension(945, 1020));
+		driver.findElement(By.name("username")).click();
+		driver.findElement(By.name("username")).sendKeys("jose");
+		driver.findElement(By.name("password")).sendKeys("123");
+		driver.findElement(By.cssSelector("button")).click();
+		driver.findElement(By.linkText("Livros")).click();
+		espera();
+		
+		driver.findElement(By.id("isbn")).click();
+		driver.findElement(By.id("isbn")).sendKeys("11111");
+		driver.findElement(By.id("autor")).click();
+		driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+		driver.findElement(By.id("titulo")).sendKeys("Guia de Bolso");
+		driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+		
+	}
+	
+	
+	 @Test
+	  public void consultarLivro() {
+	    driver.get("https://ts-scel-web.herokuapp.com/login");
+	    driver.manage().window().setSize(new Dimension(945, 1020));
+	    driver.findElement(By.name("username")).click();
+	    driver.findElement(By.name("username")).sendKeys("jose");
+	    driver.findElement(By.name("password")).sendKeys("123");
+	    driver.findElement(By.cssSelector("button")).click();
+	    driver.findElement(By.linkText("Livros")).click();
+	    driver.findElement(By.linkText("Lista de Livros")).click();
+	    driver.findElement(By.cssSelector("td:nth-child(2)")).click();
+	  }
+	 
+	 @Test
+	  public void consultarLivroComISBNInvalido() {
+	    driver.get("https://ts-scel-web.herokuapp.com/login");
+	    driver.manage().window().setSize(new Dimension(945, 1020));
+	    driver.findElement(By.name("username")).click();
+	    driver.findElement(By.name("username")).sendKeys("jose");
+	    driver.findElement(By.name("password")).sendKeys("123");
+	    driver.findElement(By.cssSelector("button")).click();
+	    driver.findElement(By.linkText("Livros")).click();
+	    driver.findElement(By.linkText("Lista de Livros")).click();
+	    driver.findElement(By.cssSelector("td:nth-child(2)")).click();
+	  }
+	 
+	 @Test
+	  public void atualizarLivro() {
+	    driver.get("https://ts-scel-web.herokuapp.com/login");
+	    driver.manage().window().setSize(new Dimension(945, 1020));
+	    driver.findElement(By.name("username")).click();
+	    driver.findElement(By.name("username")).sendKeys("jose");
+	    driver.findElement(By.name("password")).sendKeys("123");
+	    driver.findElement(By.cssSelector("button")).click();
+	    driver.findElement(By.linkText("Livros")).click();
+	    driver.findElement(By.id("isbn")).click();
+	    driver.findElement(By.id("isbn")).sendKeys("1236");
+	    driver.findElement(By.cssSelector(".row:nth-child(3) > .form-group")).click();
+	    driver.findElement(By.id("autor")).click();
+	    driver.findElement(By.id("autor")).sendKeys("Douglas Adams");
+	    driver.findElement(By.id("titulo")).click();
+	    driver.findElement(By.id("titulo")).sendKeys("Doesnt Matter");
+	    driver.findElement(By.cssSelector(".btn:nth-child(1)")).click();
+	    driver.findElement(By.cssSelector("tr:nth-child(2) .btn-primary")).click();
+	    driver.findElement(By.id("titulo")).click();
+	    driver.findElement(By.id("titulo")).sendKeys("Doesnt Matter 2");
+	    driver.findElement(By.cssSelector(".btn")).click();
+	    driver.findElement(By.cssSelector("tr:nth-child(2) > td:nth-child(3)")).click();
+	    driver.findElement(By.cssSelector("tr:nth-child(2) .delete")).click();
+	  }
+	
+
+	@Test
 	public void ct01_cadastrar_aluno_com_sucesso() {
 		// *********************************************************************************
 		// dado que o aluno não esta cadastrado
